@@ -1,10 +1,10 @@
-import DemoComponent from "./DemoComponent";
-
+import CustomCalendar from "./components/Calendar/Calendar";
+import MainPage from "./components/FiberiDemo/MainPage";
 
 function App() {
   return (
-    <div>
-   <DemoComponent />
+    <div className="bg-[#A5A5A5] h-[100vh] pt-24">
+      <MainPage />
     </div>
   );
 }
