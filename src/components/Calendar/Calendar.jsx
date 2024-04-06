@@ -1,36 +1,30 @@
 import React, { useEffect, useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "./CustomCalendar.css";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import { format } from "date-fns";
 
-const CustomCalendar = () => {
-  const [date, setDate] = useState(new Date("2024-03-26"));
-
-  const isDateActive = (date) => {
-    return date >= new Date("2024-03-26");
-  };
-
-  const tileClassName = ({ date }) => {
-    return isDateActive(date) ? "active-date" : null;
-  };
+export default function CustomCalendar({ dt }) {
+  const [value, setValue] = useState();
 
   useEffect(() => {
-    console.log(date);
-  }, [date]);
+    const formatteddate = value ? format(value.$d, "EEEE, MMMM dd") : "";
+    dt(formatteddate);
+  }, [value, dt]);
 
   return (
-    <div>
-      <Calendar
-        onChange={setDate}
-        value={date}
-        tileClassName={tileClassName}
-        tileContent={({ date }) => {
-          return isDateActive(date) ? "." : null;
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DateCalendar
+        date={value}
+        disableHighlightToday={true}
+        onChange={(newValue) => {
+          setValue(newValue);
         }}
-        className="no-border full-width"
+        sx={{
+          margin: 0,
+          width: "100%",
+        }}
       />
-    </div>
+    </LocalizationProvider>
   );
-};
-
-export default CustomCalendar;
+}

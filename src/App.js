@@ -1,4 +1,3 @@
-import CustomCalendar from "./components/Calendar/Calendar";
 import MainPage from "./components/FiberiDemo/MainPage";
 
 function App() {

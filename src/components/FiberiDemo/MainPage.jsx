@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CustomCalendar from "../Calendar/Calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,11 +7,24 @@ import {
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 import fiberyLogo from "../../assets/fibery.png";
+import TimeSelector from "../TimeSelection/TimeSelector";
 
 function MainPage() {
+  const [date, setDate] = useState(new Date());
+
   return (
-    <div className=" h-[550px]  m-auto max-w-4xl  bg-white rounded-xl flex ">
-      <div className="border rounded-l-xl w-1/2 flex flex-col">
+    <div
+      className=" h-[550px]  m-auto max-w-4xl  bg-white rounded-xl flex "
+      style={{
+        maxWidth: date ? "1000px" : "896px",
+      }}
+    >
+      <div
+        className="border rounded-l-xl flex flex-col"
+        style={{
+          width: date ? "35%" : "50%",
+        }}
+      >
         <div className="h-1/3 flex items-center justify-center">
           <img src={fiberyLogo} alt="fibery logo" className="size-44 " />
         </div>
@@ -29,20 +42,30 @@ function MainPage() {
           <p className="text-blue-500 text-xs font-medium">Cookie settings</p>
         </div>
       </div>
-      <div className="border rounded-r-xl w-1/2 p-8">
+      <div
+        className="border rounded-r-xl  p-8"
+        style={{
+          width: date ? "35%" : "50%",
+        }}
+      >
         <div className="flex flex-col gap-4">
           <p className="text-xl pl-2">Select a Date & Time</p>
-          <CustomCalendar />
+          <CustomCalendar dt={setDate} />
         </div>
         <div className="pl-2 mt-8 ">
           <div className="font-bold text-base">Time zone</div>
           <div className="font-medium text-sm flex items-center gap-3 mt-3">
             <FontAwesomeIcon icon={faEarthAsia} className="text-sm" />
             <p>UK, Ireland, Lisbon Time (16:54)</p>
-            <FontAwesomeIcon icon={faSortDown} />
+            <FontAwesomeIcon icon={faSortDown} className="pb-1" />
           </div>
         </div>
       </div>
+      {date && (
+        <div className="w-[30%]  overflow-scroll">
+          <TimeSelector dt={date.toString()} />
+        </div>
+      )}
     </div>
   );
 }
