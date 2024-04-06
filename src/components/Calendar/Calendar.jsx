@@ -8,7 +8,7 @@ export default function CustomCalendar({ dt }) {
   const [value, setValue] = useState();
 
   useEffect(() => {
-    const formatteddate = value ? format(value.$d, "EEEE, MMMM dd") : "";
+    const formatteddate = value ? format(value.$d, "EEEE, MMMM dd, yyyy") : "";
     dt(formatteddate);
   }, [value, dt]);
 

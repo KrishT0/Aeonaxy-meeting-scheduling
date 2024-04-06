@@ -1,27 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 
-function TimeButtons({ time }) {
-  const [buttonClicked, setButtonClicked] = useState(false);
-
-  const buttonClickhandler = () => {
-    setButtonClicked((prev) => !prev);
-  };
+function TimeButtons({ time, isActive, onClick, onClickNext }) {
   return (
     <div className="w-3/4">
-      {!buttonClicked ? (
+      {!isActive ? (
         <button
-          className="border border-blue-500 text-blue-500 rounded-sm p-3 w-full text-center mt-3"
-          onClick={buttonClickhandler}
+          className="border border-blue-500 text-blue-500 rounded-md p-3 w-full text-center mt-3"
+          onClick={onClick}
         >
           {time}
         </button>
       ) : (
         <div className="flex justify-between">
-          <button>{time}</button>
-          <button>Next</button>
+          <button className="bg-[#666666] text-white font-semibold rounded-md p-3 w-[48%] text-center mt-3">
+            {time}
+          </button>
+          <button
+            className="bg-blue-500 text-white font-semibold w-[48%] rounded-md p-3 text-center mt-3"
+            onClick={onClickNext}
+          >
+            Next
+          </button>
         </div>
       )}
     </div>
   );
 }
+
 export default TimeButtons;

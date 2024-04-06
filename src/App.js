@@ -2,7 +2,7 @@ import MainPage from "./components/FiberiDemo/MainPage";
 
 function App() {
   return (
-    <div className="bg-[#A5A5A5] h-[100vh] pt-24">
+    <div className="bg-[#A5A5A5] h-[100vh] pt-6">
       <MainPage />
     </div>
   );
