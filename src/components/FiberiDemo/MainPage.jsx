@@ -12,6 +12,7 @@ import fiberyLogo from "../../assets/fibery.png";
 import TimeSelector from "../TimeSelection/TimeSelector";
 import Form from "../FinalForm/Form";
 import Scheduled from "../Confirmation/Scheduled";
+import Calendar from "../Calendar/Calendar2";
 
 function MainPage() {
   const [date, setDate] = useState(new Date());
@@ -20,6 +21,8 @@ function MainPage() {
   const [topDetail, setTopDetail] = useState(null);
   const [bottomDetail, setBottomDetail] = useState(null);
   const [openConfimation, setOpenConfimation] = useState(false);
+  const [name, setName] = useState("");
+  const [finaltime, setFinalTime] = useState("");
 
   const handleOpenConfirmation = () => {
     setOpenConfimation((prev) => !prev);
@@ -52,6 +55,7 @@ function MainPage() {
     let bottomDate = date ? date.split(",")[1] : null;
     let bottomYear = date ? date.split(",")[2] : null;
     setBottomDetail(`${bottomDate}, ${bottomYear}`);
+    setFinalTime(`${topTime}, ${topDay}, ${bottomDate}, ${bottomYear}`);
   };
 
   return (
@@ -135,7 +139,8 @@ function MainPage() {
               >
                 <div className="flex flex-col gap-4">
                   <p className="text-xl font-bold pl-2">Select a Date & Time</p>
-                  <CustomCalendar dt={setDate} />
+                  {/* <CustomCalendar dt={setDate} /> */}
+                  <Calendar dt={setDate} />
                 </div>
                 <div className="pl-2 mt-8 ">
                   <div className="font-bold text-base">Time zone</div>
@@ -158,12 +163,15 @@ function MainPage() {
             </div>
           ) : (
             <div className="w-[65%] overflow-y-scroll">
-              <Form onClickOpenFinalForm={handleOpenConfirmation} />
+              <Form
+                onClickOpenFinalForm={handleOpenConfirmation}
+                setName={setName}
+              />
             </div>
           )}
         </div>
       ) : (
-        <Scheduled />
+        <Scheduled name={name} timeSelected={finaltime} />
       )}
     </div>
   );

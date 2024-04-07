@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Checkbox from "./Checkbox";
 
-function Form({ onClickOpenFinalForm }) {
+function Form({ onClickOpenFinalForm, setName }) {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOptionChange = (option) => {
@@ -33,6 +33,7 @@ function Form({ onClickOpenFinalForm }) {
           id="name"
           name="name"
           className="border-2 border-gray-300 rounded-md p-2"
+          onChange={(e) => setName(e.target.value)}
         />
         <label htmlFor="email" className="font-extrabold text-xs">
           Email *
@@ -124,7 +125,7 @@ function Form({ onClickOpenFinalForm }) {
         />
 
         <button
-          className="text-white p-2 text-sm font-medium rounded-3xl  mt-5 mb-5 bg-blue-600"
+          className="text-white p-2 px-4 text-sm font-medium rounded-3xl  mt-5 mb-5 bg-blue-500"
           onClick={onClickOpenFinalForm}
         >
           Schedule Event

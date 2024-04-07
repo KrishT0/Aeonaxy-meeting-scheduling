@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import profileImage from "../../assets/profile.png";
 import googleImage from "../../assets/google.png";
 import microsoftImage from "../../assets/microsoft.png";
@@ -11,7 +11,12 @@ import {
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 
-function Scheduled() {
+function Scheduled({ name, timeSelected }) {
+  useEffect(() => {
+    console.log("name", name);
+    console.log("timeSelected", timeSelected);
+  }, [name, timeSelected]);
+
   return (
     <div className="flex flex-col p-6 w-full items-start">
       <div className="flex flex-col gap-3 m-auto w-[50%] items-center">
@@ -36,10 +41,11 @@ function Scheduled() {
         <div className="border-2 border-gray-300 w-full p-4 rounded-xl flex flex-col gap-3">
           <h2 className="text-lg font-extrabold"> Fibery Demo</h2>
           <p className="text-base text-[#7d7d7d] font-semibold">
-            <FontAwesomeIcon icon={faUser} className="mr-2" /> Name entered
+            <FontAwesomeIcon icon={faUser} className="mr-2" /> {name}
           </p>
           <p className="text-base text-[#7d7d7d] font-semibold">
-            <FontAwesomeIcon icon={faCalendar} className="mr-2" /> Name entered
+            <FontAwesomeIcon icon={faCalendar} className="mr-2" />{" "}
+            {timeSelected}
           </p>
           <p className="text-base text-[#7d7d7d] font-semibold">
             <FontAwesomeIcon icon={faEarthAsia} className="mr-2" /> UK, Ireland,

@@ -5,7 +5,7 @@ function TimeButtons({ time, isActive, onClick, onClickNext }) {
     <div className="w-3/4">
       {!isActive ? (
         <button
-          className="border border-blue-500 text-blue-500 rounded-md p-3 w-full text-center mt-3"
+          className="border border-blue-500 text-blue-500 font-semibold rounded-md p-3 w-full text-center mt-3"
           onClick={onClick}
         >
           {time}
