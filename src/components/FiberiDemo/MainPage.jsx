@@ -38,22 +38,18 @@ function MainPage() {
     return `${padZero(newHours)}:${padZero(newMins)}`;
   }
 
-  let topTime = null;
-  let topDay = null;
-  let bottomDate = null;
-
   const handleOpenFinalForm = () => {
     setOpenFinalForm((prev) => !prev);
     console.log(date);
 
-    topTime = selectedTime
+    let topTime = selectedTime
       ? `${selectedTime} - ${addMinutes(selectedTime, 45)}`
       : null;
 
-    topDay = date ? date.split(",")[0] : null;
+    let topDay = date ? date.split(",")[0] : null;
     setTopDetail(`${topTime}, ${topDay},`);
 
-    bottomDate = date ? date.split(",")[1] : null;
+    let bottomDate = date ? date.split(",")[1] : null;
     let bottomYear = date ? date.split(",")[2] : null;
     setBottomDetail(`${bottomDate}, ${bottomYear}`);
   };
