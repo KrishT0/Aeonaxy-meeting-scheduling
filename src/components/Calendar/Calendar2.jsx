@@ -30,8 +30,8 @@ function ServerDay(props) {
 }
 
 export default function Calendar({ dt }) {
-     const [highlightedDays, setHighlightedDays] = useState([1, 2, 3, 4]);
-     const [value, setValue] = useState();
+  const [highlightedDays, setHighlightedDays] = useState([1, 2, 3, 4]);
+  const [value, setValue] = useState();
 
   useEffect(() => {
     const formatteddate = value ? format(value.$d, "EEEE, MMMM dd, yyyy") : "";
