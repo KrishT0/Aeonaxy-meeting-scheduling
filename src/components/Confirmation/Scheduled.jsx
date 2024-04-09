@@ -52,7 +52,8 @@ function Scheduled({ name, timeSelected }) {
             Lisbon Time
           </p>
           <p className="text-base text-[#7d7d7d] font-semibold">
-            <FontAwesomeIcon icon={faVideo} className="mr-2" /> Name entered
+            <FontAwesomeIcon icon={faVideo} className="mr-2" /> Web conferencing
+            details to follow
           </p>
         </div>
         <hr

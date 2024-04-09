@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import CustomCalendar from "../Calendar/Calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
@@ -86,7 +85,7 @@ function MainPage() {
               {openFinalForm && (
                 <FontAwesomeIcon
                   icon={faArrowLeft}
-                  className="text-blue-500 rounded-[50%] border p-2 px-[10px] text-2xl mt-5 hover:cursor-pointer hover:bg-gray-100 duration-150 "
+                  className="text-blue-500 rounded-[50%] border p-2 px-[10px] text-2xl mt-5 hover:cursor-pointer hover:bg-gray-100 duration-150"
                   onClick={handleOpenFinalForm}
                 />
               )}
@@ -139,7 +138,6 @@ function MainPage() {
               >
                 <div className="flex flex-col gap-4">
                   <p className="text-xl font-bold pl-2">Select a Date & Time</p>
-                  {/* <CustomCalendar dt={setDate} /> */}
                   <Calendar dt={setDate} />
                 </div>
                 <div className="pl-2 mt-8 ">

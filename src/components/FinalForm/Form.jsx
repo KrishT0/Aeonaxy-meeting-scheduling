@@ -1,11 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Checkbox from "./Checkbox";
 
 function Form({ onClickOpenFinalForm, setName }) {
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isName, setIsName] = useState("");
+  const [error, setError] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [optionError, setOptionError] = useState(false);
+  const [optionArrayError, setOptionArrayError] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleOptionArrayChange = (option) => {
+    setSelectedOptions((prevOptions) => [...prevOptions, option]);
+  };
+
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    setIsName(name);
+  };
+
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
+  };
+
+  const validateFields = () => {
+    let nameError = false;
+    let emailError = false;
+    let optionError = false;
+    let optionArrayError = false;
+
+    if (!isName) {
+      nameError = true;
+    }
+
+    if (!email) {
+      emailError = true;
+    }
+
+    if (!selectedOption) {
+      optionError = true;
+    }
+
+    if (selectedOptions.length === 0) {
+      optionArrayError = true;
+    }
+
+    setError(nameError);
+    setEmailError(emailError);
+    setOptionError(optionError);
+    setOptionArrayError(optionArrayError);
+
+    return !nameError && !emailError && !optionError && !optionArrayError;
+  };
+
+  const onClickShcedulehandler = () => {
+    if (validateFields()) {
+      setName(isName);
+      onClickOpenFinalForm();
+    }
   };
 
   const optionArray = [
@@ -32,9 +90,11 @@ function Form({ onClickOpenFinalForm, setName }) {
           type="text"
           id="name"
           name="name"
+          value={isName}
           className="border-2 border-gray-300 rounded-md p-2"
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
         />
+        {error && <p className="text-red-500 text-xs">Please enter name</p>}
         <label htmlFor="email" className="font-extrabold text-xs">
           Email *
         </label>
@@ -42,15 +102,23 @@ function Form({ onClickOpenFinalForm, setName }) {
           type="text"
           id="email"
           name="email"
+          value={email}
+          onChange={handleEmailChange}
           className="border-2 border-gray-300 rounded-md p-2"
         />
 
+        {emailError && (
+          <p className="text-red-500 text-xs">Please enter email</p>
+        )}
         <button className="border border-blue-600 rounded-2xl p-2 px-4 text-xs font-medium w-fit text-blue-600">
           Add guest
         </button>
       </div>
       <div className="mt-5 flex flex-col gap-2">
         <h2 className="text-sm font-extrabold">I want Fibery to work for: *</h2>
+        {optionError && (
+          <p className="text-red-500 text-xs">Please select an option</p>
+        )}
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -103,8 +171,17 @@ function Form({ onClickOpenFinalForm, setName }) {
 
       <div className="flex flex-col gap-2 mt-5">
         <h2 className="text-sm font-extrabold">You are more about *</h2>
+        {optionArrayError && (
+          <p className="text-red-500 text-xs">Please select an option</p>
+        )}
         {optionArray.map((option, index) => {
-          return <Checkbox key={index} label={option} />;
+          return (
+            <Checkbox
+              key={index}
+              label={option}
+              onChange={() => handleOptionArrayChange(option)}
+            />
+          );
         })}
       </div>
 
@@ -126,7 +203,9 @@ function Form({ onClickOpenFinalForm, setName }) {
 
         <button
           className="text-white p-2 px-4 text-sm font-medium rounded-3xl  mt-5 mb-5 bg-blue-500"
-          onClick={onClickOpenFinalForm}
+          onClick={() => {
+            onClickShcedulehandler();
+          }}
         >
           Schedule Event
         </button>
