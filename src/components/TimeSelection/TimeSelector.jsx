@@ -30,14 +30,7 @@ function TimeSelector({ dt, handleOpenFinalForm, setSelectedTime }) {
   return (
     <div className="flex flex-col gap-5 p-3 pr-0 items-center w-full">
       <div className="font-medium mt-14">{formattedDate}</div>
-      <div
-        className="w-full flex flex-col items-center overflow-y-auto max-h-[400px]"
-        style={{
-          scrollbarWidth: "thin", // "auto" or "thin" for scrollbar width
-          scrollbarColor: "#888888 #f0f0f0",
-          msScrollbarArrowColor : "transparent"
-        }}
-      >
+      <div className="w-full flex flex-col items-center overflow-y-auto max-h-[400px]">
         {time.map((t, index) => (
           <TimeButtons
             key={index}

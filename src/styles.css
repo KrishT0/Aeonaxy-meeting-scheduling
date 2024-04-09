@@ -8,3 +8,16 @@
 html {
   font-family: "Noto Sans", sans-serif;
 }
+
+.w-full::-webkit-scrollbar {
+  width: 12px;
+}
+
+.w-full::-webkit-scrollbar-track {
+  background: none;
+}
+
+.w-full::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 20px;
+}

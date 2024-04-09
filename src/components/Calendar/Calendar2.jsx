@@ -3,26 +3,30 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { DayCalendarSkeleton } from "@mui/x-date-pickers/DayCalendarSkeleton";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 
-//eslint-disable-next-line
-const initialValue = dayjs("2022-04-17");
-
 function ServerDay(props) {
-  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
-  const isSelected =
-    !props.outsideCurrentMonth &&
-    highlightedDays.indexOf(props.day.date()) >= 0;
+  const { day, outsideCurrentMonth, highlightedDays, ...other } = props;
   const isClicked = props["aria-selected"];
+  const isDisabled = dayjs().diff(day, "day") > 0;
+  const isHighlighted =
+    highlightedDays.includes(day.format("YYYY-MM-DD")) &&
+    day.month() === dayjs().month();
 
   return (
     <PickersDay
       {...other}
       style={{
-        color: isClicked ? "#fff" : isSelected ? "#1976d2" : "",
-        backgroundColor: isClicked ? "#1976d2" : isSelected ? "#eff5ff" : "",
+        color: isClicked
+          ? "#fff"
+          : isDisabled
+            ? "#ccc"
+            : isHighlighted
+              ? "#000"
+              : "",
+        backgroundColor: isClicked ? "#03DEB6" : isHighlighted ? "#03DEB6" : "",
+        cursor: isDisabled ? "not-allowed" : "pointer",
       }}
       outsideCurrentMonth={outsideCurrentMonth}
       day={day}
@@ -31,36 +35,39 @@ function ServerDay(props) {
 }
 
 export default function Calendar({ dt }) {
+  const [value, setValue] = useState(dayjs());
+  const today = dayjs();
+  const futureDates = [0, 1, 2, 3, 4].map((daysToAdd) =>
+    today.add(daysToAdd, "day").format("YYYY-MM-DD")
+  );
   //eslint-disable-next-line
-  const [highlightedDays, setHighlightedDays] = useState([1, 2, 3, 4]);
-  const [value, setValue] = useState();
+  const [highlightedDays, setHighlightedDays] = useState(futureDates);
 
   useEffect(() => {
-    const formatteddate = value ? format(value.$d, "EEEE, MMMM dd, yyyy") : "";
-    dt(formatteddate);
+    const formattedDate = value ? format(value.$d, "EEEE, MMMM dd, yyyy") : "";
+    dt(formattedDate);
   }, [value, dt]);
+
+  const disablePastDates = (day) => {
+    return !highlightedDays.includes(day.format("YYYY-MM-DD"));
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
-        disableHighlightToday={true}
-        onChange={(newValue) => {
-          setValue(newValue);
+        disableHighlightToday
+        onChange={(newValue) => setValue(newValue)}
+        renderDay={(day, selectedDates, DayComponentProps) => {
+          return (
+            <ServerDay
+              day={day}
+              highlightedDays={highlightedDays}
+              {...DayComponentProps}
+            />
+          );
         }}
-        sx={{
-          margin: 0,
-          width: "100%",
-        }}
-        date={value}
-        renderLoading={() => <DayCalendarSkeleton />}
-        slots={{
-          day: ServerDay,
-        }}
-        slotProps={{
-          day: {
-            highlightedDays,
-          },
-        }}
+        shouldDisableDate={disablePastDates}
+        value={value}
       />
     </LocalizationProvider>
   );
