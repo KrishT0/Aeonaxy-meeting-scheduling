@@ -7,6 +7,7 @@ import { DayCalendarSkeleton } from "@mui/x-date-pickers/DayCalendarSkeleton";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 
+//eslint-disable-next-line
 const initialValue = dayjs("2022-04-17");
 
 function ServerDay(props) {
@@ -30,6 +31,7 @@ function ServerDay(props) {
 }
 
 export default function Calendar({ dt }) {
+  //eslint-disable-next-line
   const [highlightedDays, setHighlightedDays] = useState([1, 2, 3, 4]);
   const [value, setValue] = useState();
 
